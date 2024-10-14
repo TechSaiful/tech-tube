@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tech tube | share what you want</title>
+
+    <!-- tailwind CSS & daisyUI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body>
+
+    <main>
+
+
+        <!-- header section -->
+        <div class="header py-4">
+            <!-- navbar -->
+            <div class="grid grid-cols-3 gap-2 items-center">
+                <!-- logo -->
+                <div class="md:col-span-1">
+                    <a><img class="md:w-[140px] w-full" src="images/tech tube logo.jpg"
+                            alt="tech tube logo loading..."></a>
+                </div>
+                <!-- search -->
+                <div class="col-span-2 md:col-span-1">
+                    <label class="input input-bordered flex items-center gap-2">
+                        <input type="text" class="grow" placeholder="Search" />
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                            class="h-4 w-4 opacity-70">
+                            <path fill-rule="evenodd"
+                                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </label>
+                </div>
+                <div class="text-end md:col-span-1 col-end-4">
+                    <a class="btn">Blog</a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- category navigation section -->
+        <div>
+            <div id="category_container" class="flex gap-4 justify-center"></div>
+        </div>
+
+
+        <!-- video card section -->
+        <div class="py-10 w-11/12 mx-auto">
+            <div id="video_container" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4"></div>
+        </div>
+
+
+
+    </main>
+
+
+
+
+
+
+
+
+
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
