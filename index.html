@@ -6,9 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tech tube | share what you want</title>
 
+
     <!-- tailwind CSS & daisyUI CDN -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -56,6 +59,23 @@
             <div id="video_container" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4"></div>
         </div>
 
+
+        <!-- modal for showing video details -->
+        <!-- Open the modal using ID.showModal() method -->
+        <button id="sdlkfjskldjf" class="btn hidden" onclick="my_modal_5.showModal()">open modal</button>
+        <dialog id="video_details_modal" class="modal modal-bottom sm:modal-middle">
+            <div class="modal-box">
+                <div id="modal_content">
+                    
+                </div>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <!-- if there is a button in form, it will close the modal -->
+                        <button class="btn">Close</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
 
 
     </main>

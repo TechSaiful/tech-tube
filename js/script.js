@@ -12,16 +12,24 @@ loadCategories();
 const loadVideosByCategory = (id) => {
     fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
     .then((res) => res.json() )
-    .then((data) => showVideos(data.category))
+    .then((data) => {
+        // remove active class form all button
+        removeActive();
+        // add active class to button
+        let activeButton = document.getElementById(`btn_${id}`);
+        activeButton.classList.add("active-category-btn");
+        showVideos(data.category)
+    })
     .catch((err) => console.log(err));
 }
 
+// show category button
 const showCategories = (categories) => {
     let categoryContainer = document.getElementById('category_container');
     for (const category of categories) {
         let categoryButtonContainer = document.createElement('div');
         categoryButtonContainer.innerHTML = `
-        <button onclick="loadVideosByCategory(${category.category_id})" class="btn">
+        <button id="btn_${category.category_id}" onclick="loadVideosByCategory(${category.category_id})" class="btn category-button">
             ${category.category}
         </button>
         `
@@ -41,7 +49,17 @@ const loadVideos = () => {
 }
 loadVideos();
 
-// video time calculation
+// video details fetch
+const loadVideoDetails = async (videoId) => {
+    let uri = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`
+    let res = await fetch(uri);
+    let data = await res.json();
+    showVideoDetails(data.video);
+    console.log(data.video);
+}
+
+
+// video time calculation function
 function videoTimeSet(time){
     let hour = parseInt(time /3600);
     let remainingSec = time % 3600;
@@ -49,31 +67,33 @@ function videoTimeSet(time){
     return `${hour} : ${minute}`;
 }
 
+// active class remove function
+const removeActive = () => {
+    let button = document.getElementsByClassName('category-button');
+    for( btn of button){
+        btn.classList.remove('active-category-btn');
+    }
+}
 
+// video details view function
+const showVideoDetails = (video) => {
+    console.log(video);
+    let modalContent = document.getElementById('modal_content');
+    modalContent.innerHTML = `
+        <img src=${video.thumbnail} />
+        <p>${video.description}</p>
+    
+    `;
 
-// {
-//     "category_id": "1003",
-//     "video_id": "aaac",
-//     "thumbnail": "https://i.ibb.co/NTncwqH/luahg-at-pain.jpg",
-//     "title": "Laugh at My Pain",
-//     "authors": [
-//         {
-//             "profile_picture": "https://i.ibb.co/XVHM7NP/kevin.jpg",
-//             "profile_name": "Kevin Hart",
-//             "verified": false
-//         }
-//     ],
-//     "others": {
-//         "views": "1.1K",
-//         "posted_date": "13885"
-//     },
-//     "description": "Comedian Kevin Hart brings his unique brand of humor to life in 'Laugh at My Pain.' With 1.1K views, this show offers a hilarious and candid look into Kevin's personal stories, struggles, and triumphs. It's a laugh-out-loud experience filled with sharp wit, clever insights, and a relatable charm that keeps audiences coming back for more."
-// }
+    document.getElementById("video_details_modal").showModal();
+}
+
 
 const showVideos = (videos) => {
     let videoContainer = document.getElementById('video_container');
     videoContainer.innerHTML = '';
 
+    // conditional grid for null category page
     if(videos.length == 0){
         videoContainer.classList.remove('grid');
         videoContainer.innerHTML = `
@@ -100,14 +120,17 @@ const showVideos = (videos) => {
         <div class="px-0 py-4">
             <div class="flex gap-4">
                 <div class=""><img class="h-8 w-8 rounded-full object-cover" src="${video.authors[0].profile_picture}" /></div>
-                <div class="">
+                <div class="w-full">
                     <h2 class="font-bold text-lg">${video.title}</h2>
                     <div class="flex items-center gap-2">
                         <p>${video.authors[0].profile_name}</p>
                         ${ video.authors[0].verified == true ? '<img class="h-4 w-4" src="https://img.icons8.com/?size=48&id=98A4yZTt9abw&format=png" />' : ' ' }
                         
                     </div>
-                    <p>${video.others.views} views</p>
+                    <div class="flex justify-between">
+                        <p>${video.others.views} views</p>
+                        <p class="mr-6"><button onClick="loadVideoDetails('${video.video_id}')" class="bg-orange-500 py-1 px-4 font-bold rounded-md">view</button></p>
+                    </div>
                 </div>
             </div>
         </div>
